@@ -95,12 +95,29 @@ if __name__ == "__main__":
     print("Numero de jugadores minimo 3 y maximo 5")
     # creacion de la coleccion donde se encontrara guaradado el lugar y la persona escondida
     juego = {}
+    numJugadores = -1
+    turno = 0
+    jugadores = []
+    buscador = ""
+    escondidos = 0
+    escondite = -1
+    buscarN = -1
+    buscarE = -1
+    buscarO = -1
+    buscarS = -1
+    caminar = -1
     # validamos el numero de jugadores que pueden participar
     while True:
-        # ingresamos el numero de jugadores
-        numJugadores = int(input("Ingrese el numero de jugadores: "))
+        # comprobamos si lo ingresado por el usuario es un numero
+        try:
+            # ingresamos el numero de jugadores
+            numJugadores = int(input("Ingrese el numero de jugadores: "))
+        except ValueError:
+            pass
         # comprobamos si existe el numero de jugadores en el rango
-        if numJugadores < 3 or numJugadores > 5:
+        if (numJugadores == -1):
+            print("No es un numero lo ingresado")
+        elif numJugadores < 3 or numJugadores > 5:
             # Informacion de jugadores fuera de rango
             print("Numeros de jugadores superior/inferior recuerde minimo 3 y maximo 5")
         else:
@@ -129,20 +146,34 @@ if __name__ == "__main__":
     # Seleccion de escondite de los jugadores
     for i in range(0, len(jugadores)):
         # Muestra todos los lugares donde se pueden encontrar
-        mostarEscondites(escondites)
+        
         # escondites dentro del rango existente
         while True:
+            mostarEscondites(escondites)
+            escondite = -1
             # Guardamos el lugar donde se escondera nuestro jugador
-            escondite = int(
-                input("{} seleccione un escondite: ".format(jugadores[i])))
+            try:
+                escondite = int(
+                    input("{} seleccione un escondite: ".format(jugadores[i])))
+            except:
+                pass
             # Comprobamos si exite o no el escondite
-            if escondite < 0 or escondite > len(escondites):
+            if escondite == -1:
+                print("No es un numero lo ingresado")
+                system("pause")
+                system("cls")
+            elif escondite < 0 or escondite > len(escondites):
                 system("cls")
                 print("Escondite no existente")
             else:
-                juego[escondites[escondite]] = jugadores[i]
-                system("cls")
-                break
+                if escondites[escondite] in juego:
+                    print("Existe un jugador ya escondido ahi")
+                    system("pause")
+                    system("cls")
+                else:
+                    juego[escondites[escondite]] = jugadores[i]
+                    system("cls")
+                    break
     # limpia la pantalla
     system("cls")
 
@@ -150,129 +181,174 @@ if __name__ == "__main__":
     # si el numero del turnos es diferente de 0 y si las personas escondidas son diferente de 0 salemos de nuestro bucle
     while turnos != 0 and escondidos != 0:
         system("cls")
+        caminar = -1
+        buscarN = -1
+        buscarE = -1
+        buscarO = -1
+        buscarS = -1
         # muestra las personas por buscar y las oportunidades que tiene para encontrales
         print("{} empieza a buscar a tus amigos, buen suerte tienes {} oportunidades y tines {} por buscar".format(
             buscador, turnos, escondidos))
         # empeiza a caminar en el parque se pude eleguir entre 4 opciones
-        caminar = int(input(
-            "Te encuentras en un parque de tu ciudad pudes caminar al \n1.-Norte\n2.-Este\n3.-Sur\n4.-Oeste\nSeleccione:"))
+        #Validacion si es numero o no
+        try:
+            caminar = int(input(
+                "Te encuentras en un parque de tu ciudad pudes caminar al \n1.-Norte\n2.-Este\n3.-Sur\n4.-Oeste\nSeleccione:"))
+        except:
+            pass
         system("cls")
         # Camina Hacia el norte del parque
-        if caminar == 1:
+        if caminar == -1:
+            print("No es un numero lo que usted ingreso")
+            system("pause")
+        elif caminar == 1:
             # informacion donde nos encontramos ubicados
             print("NORTE")
-            # si selecciona alguna de las opciones y si no se encuetra pierde 1 turno
-            buscarN = int(input(
-                "Seleccione donde quiere buscar:\n1.-Arbol norte\n2.-Arbusto\n3.-Estatua\n0.-Regresar Al Parque\nSeleccione:"))
+            #Validacion del ingreso de opciones
+            try:
+                 # si selecciona alguna de las opciones y si no se encuetra pierde 1 turno
+                buscarN = int(input(
+                    "Seleccione donde quiere buscar:\n1.-Arbol norte\n2.-Arbusto\n3.-Estatua\n0.-Regresar Al Parque\nSeleccione:"))
+            except:
+                pass
+            if buscarN==-1:
+                print("No es un numero lo ingresado")
+                system("pause")
+                system("cls")
             # si selecciona la opcion de arbol norte
-            if buscarN == 1:
+            elif buscarN == 1:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("arbol_norte", juego, escondidos)
                 # se resta un turno
-                turnos -= 1  
+                turnos -= 1
             # si selecciona la opcion de arbusto
-            elif buscarN == 2:  
+            elif buscarN == 2:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("arbusto", juego, escondidos)
-                 # se resta un turno
-                turnos -= 1 
+                # se resta un turno
+                turnos -= 1
              # si selecciona la opcion de estatua
-            elif buscarN == 3: 
+            elif buscarN == 3:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("estatua", juego, escondidos)
                 # se resta un turno
-                turnos -= 1  
+                turnos -= 1
              # si desea regresar al parque
-            elif buscarN == 0: 
-                 # regresa al parque principal
-                print("Regresando Al Parque") 
+            elif buscarN == 0:
+                # regresa al parque principal
+                print("Regresando Al Parque")
          # Camina Hacia el Este del parque
-        elif caminar == 2: 
+        elif caminar == 2:
             # informacion donde nos encontramos ubicados
-            print("ESTE")  
-            # si selecciona alguna de las opciones y si no se encuetra pierde 1 turno
-            buscarE = int(input(
-                "Seleccione donde quiere buscar:\n1.-Arbol este\n2.-Pileta\n3.-Casa del Arbol\n0.-Regresar Al Parque\nSeleccione:"))
-             # si selecciona la opcion arbol este
-            if buscarE == 1: 
+            print("ESTE")
+            #validacion de la entrada de dato
+            try:
+                # si selecciona alguna de las opciones y si no se encuetra pierde 1 turno
+                buscarE = int(input(
+                    "Seleccione donde quiere buscar:\n1.-Arbol este\n2.-Pileta\n3.-Casa del Arbol\n0.-Regresar Al Parque\nSeleccione:"))
+            except:
+                pass
+            if buscarE==-1:
+                print("No es un numero lo ingresado")
+                system("pause")
+                system("cls")
+            # si selecciona la opcion arbol este
+            elif buscarE == 1:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("arbol_este", juego, escondidos)
                 # se resta un turno
-                turnos -= 1  
+                turnos -= 1
             # si selecciona la opcion pileta
-            elif buscarE == 2:  
+            elif buscarE == 2:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("pileta", juego, escondidos)
                 # se resta un turno
-                turnos -= 1  
+                turnos -= 1
              # si selecciona la opcion casa del arbol
-            elif buscarE == 3: 
+            elif buscarE == 3:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("casa_del_arbol", juego, escondidos)
-                 # se resta un turno
-                turnos -= 1 
+                # se resta un turno
+                turnos -= 1
             # si desea regresar al parque
-            elif buscarE == 0:  
-                 # regresa al parque principal
-                print("Regresando Al Parque") 
+            elif buscarE == 0:
+                # regresa al parque principal
+                print("Regresando Al Parque")
         # Camina Hacia el Sur del parque
-        elif caminar == 3:  
+        elif caminar == 3:
             # informacion donde nos encontramos ubicados
-            print("SUR")  
-            # si selecciona alguna de las opciones y si no se encuetra pierde 1 turno
-            buscarS = int(input(
+            print("SUR")
+            #validacion del ingreso de datos
+            try:
+                # si selecciona alguna de las opciones y si no se encuetra pierde 1 turno
+                buscarS = int(input(
                 "Seleccione donde quiere buscar:\n1.-Arbol sur\n2.-Juegos del parque sur\n3.-Cabaña\n0.-Regresar Al Parque\nSeleccione:"))
+            except:
+                pass
+            if buscarS==-1:
+                print("No es un numero lo ingresado")
+                system("pause")
+                system("cls")
             # si selecciona la opcion arbol sur
-            if buscarS == 1:  
+            elif buscarS == 1:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("arbol_sur", juego, escondidos)
                 # se resta un turno
-                turnos -= 1  
+                turnos -= 1
              # si selecciona la opcion juegos del parque
-            elif buscarS == 2: 
+            elif buscarS == 2:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("juegos_del_parke", juego, escondidos)
                 # se resta un turno
-                turnos -= 1  
+                turnos -= 1
             # si selecciona la opcion cabaña
-            elif buscarS == 3:  
+            elif buscarS == 3:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("cabaña", juego, escondidos)
-                 # se resta un turno
-                turnos -= 1 
+                # se resta un turno
+                turnos -= 1
             # si desea regresar al parque
-            elif buscarS == 0:  
-                 # regresa al parque principal
-                print("Regresando Al Parque") 
+            elif buscarS == 0:
+                # regresa al parque principal
+                print("Regresando Al Parque")
         # Camina Hacia el Oeste del parque
-        elif caminar == 4:  
-            #informacion donde nos encontramos ubicados
-            ("OESTE")  
-            #si selecciona alguna de las opciones y si no se encuetra pierde 1 turno
-            buscarO = int(input(
+        elif caminar == 4:
+            # informacion donde nos encontramos ubicados
+            ("OESTE")
+            try:
+                # si selecciona alguna de las opciones y si no se encuetra pierde 1 turno
+                buscarO = int(input(
                 "Seleccione donde quiere buscar:\n1.-Arbol oeste\n2.-Laguna\n0.-Regresar Al Parque\nSeleccione:"))
-             # si selecciona la opcion arbol oeste
-            if buscarO == 1: 
+            except:
+                pass
+            if buscarO==-1:
+                print("No es un numero lo ingresado")
+                system("pause")
+                system("cls")
+            # si selecciona la opcion arbol oeste
+            elif buscarO == 1:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("arbol_oeste", juego, escondidos)
-                 # se resta un turno
-                turnos -= 1 
+                # se resta un turno
+                turnos -= 1
              # si selecciona la opcion laguna
-            elif buscarO == 2: 
+            elif buscarO == 2:
                 # comprueba si existe alguien ahi
                 escondidos = seEncuentra("laguna", juego, escondidos)
                 # se resta un turno
-                turnos -= 1  
+                turnos -= 1
             # si desea regresar al parque
-            elif buscarO == 0:  
-                 # regresamos al parque principal
-                print("Regresando Al Parque") 
+            elif buscarO == 0:
+                # regresamos al parque principal
+                print("Regresando Al Parque")
+        if escondidos!=0:
+            print("Regresando al parque principal")
         system("pause")
-         # si el jugador principal encontro a todos el numero de escodidos sera 0 y ganara el juego
-        if (escondidos == 0): 
+        # si el jugador principal encontro a todos el numero de escodidos sera 0 y ganara el juego
+        if (escondidos == 0):
             # informacion de que gano la partida
-            print("Ganaste!!! eres un Capo :)")
+            print("Ganaste!!! eres un Capo {} encontraste a todos :)".format(buscador))
          # si no encuentra a todas las personas y su turno son 0 pierde
-        else: 
+        else:
             # informacion que dice que perdio el game
-            print("Perdiste :c ")  
+            print("Perdiste :c te falto buscar a {} persona(s)".format(escondidos))
