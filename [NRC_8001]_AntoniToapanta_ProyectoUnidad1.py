@@ -82,7 +82,9 @@ def seEncuentra(lugar, diccionarioJuego, escondidos):
     # conprobamos si el lugar existe en mi diccionario de juego
     if lugar in diccionarioJuego:
         print("Encontraste a {}".format(diccionarioJuego[lugar]))
-        # restamos el numero de personas por encontrar
+       #Eliminar al jugar de nuestra lista juego
+        diccionarioJuego.pop(lugar)
+         # restamos el numero de personas por encontrar
         escondidos -= 1
     else:
         # retornamos las personas que faltan encontrar
