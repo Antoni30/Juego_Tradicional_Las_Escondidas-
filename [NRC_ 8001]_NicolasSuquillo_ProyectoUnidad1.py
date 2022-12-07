@@ -1,3 +1,12 @@
+"""
+El juego de las escondidas es un juego que muchos de nosotros jugábamos de pequeños, acompañados de todos nuestros amigos, consiste de una persona que busca y los demás se esconden. El objetivo principal es encontrar a las demás personas en el menor tiempo posible en este caso se lo hará por turnos, y si encuentra a todos gana el juego caso contrario perdería.
+Autores:
+Antoni Toapanta Nicolas Suquillo
+
+Verisión:
+VER.1.0
+"""
+
 from gtts import gTTS
 from os import system, name
 from time import sleep 
