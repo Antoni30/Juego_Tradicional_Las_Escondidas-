@@ -20,7 +20,29 @@ print("\t\t\t---------------------------------\n")
 print("\t\t\tBuena suerte!!!!\n\n\n\n\n")
 system("pause")
 system("cls")
-
+ 
+#Validacion de ingreso solo numeros
+def validarNumero(numero):
+    """
+    Es un proceso que se encarga de validar que el numero ingresado por el usuario sea solo numeros
+    Parametros:
+    ------------
+        numero: str
+            Numero que se ingreso por el usuario
+    
+    Retorna:
+    ------------
+       No tiene parametros de salida
+    """
+    #Se valida que el numero sea solo numeros
+    while not numero.isdigit():
+        #Se le indica al usuario que ingrese solo numeros
+        print("Solo ingrese numeros")
+        #Se le pide al usuario que ingrese el numero
+        numero = input("Ingrese de nuevo el numero: ")
+    #Se regresa el numero
+    return numero
+    
 #Se leen las frases de un txt y se guardan en una lista
 def guardarFrases():
     """
@@ -69,7 +91,9 @@ def elegirFrase(frases):
     #Se valida que el numero este en el rango de la lista
     while frase == "":
         #Se le pide al usuario que ingrese un numero
-        numero = input("Ingresa un numero del 1 al 20: ")
+        numero = input(" Ingresa un numero del 1 al 20: ")
+        #Se valida que el numero sea solo numeros
+        numero = validarNumero(numero)
         #Se valida que el numero este en el rango de la lista
         if numero == "1":
             #Se guarda la frase en la variable
@@ -250,7 +274,6 @@ def adivinarFrase(frase):
     #Se limpia la pantalla
     limpiar()
     
-
 #Se ejecuta el juego
 def main():
     """
