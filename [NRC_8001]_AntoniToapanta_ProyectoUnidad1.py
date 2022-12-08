@@ -347,10 +347,11 @@ if __name__ == "__main__":
             print("Regresando al parque principal")
         system("pause")
         # si el jugador principal encontro a todos el numero de escodidos sera 0 y ganara el juego
-        if (escondidos == 0):
-            # informacion de que gano la partida
-            print("Ganaste!!! eres un Capo {} encontraste a todos :)".format(buscador))
-         # si no encuentra a todas las personas y su turno son 0 pierde
-        else:
-            # informacion que dice que perdio el game
-            print("Perdiste :c te falto buscar a {} persona(s)".format(escondidos))
+    if (escondidos == 0):
+        # informacion de que gano la partida
+        print("Ganaste!!! eres un Capo {} encontraste a todos :)".format(buscador))
+    # si no encuentra a todas las personas y su turno son 0 pierde
+    else:
+        # informacion que dice que perdio el game
+        print("Perdiste :c te falto buscar a {} persona(s)".format(escondidos))
+    system("pause")
